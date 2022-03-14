@@ -1,38 +1,59 @@
 "use strict";
 
-/* Lesson 19. Callback functions */
+/* Lesson 20. Objects */
 
-/* Напишем функцию с названием learnJS() и передадим в качестве аргументов lang и callback.
-Это означает, что в дальнейшем в другую функцию в качестве аргумента мы можем передать другую функцию.
+const options = {
+    name: 'test',
+    width: 1024,
+    height: 1024,
+    colors: {
+        border: 'black',
+        bg: 'red'
+    },
+    makeTest: function(a, b) {
+        console.log(`${a} my dear ${b}!`);
+    }
+};
 
-Чтобы мы могли выполнить callback функцию (которая будет передана как аргумент в дальнейшем)
-мы вызываем ее в теле функции:*/
+const {border, bg} = options.colors;
 
-function learnJS(lang, callback) {
-    console.log(`Я изучаю ${lang}!`);
-    callback();
-}
+console.log(bg);
 
-/* Такая запись означает, что у нас сперва выполнится одна функция
- и только после нее выполнится другая (callback) */
+// console.log(options["colors"]['bg']);
 
-/* Вызовем функцию learnJS() и в качестве аргументов передадим строку и другую функцию: */
+// options.makeTest('Goodbye','friend');
+// console.log(options.length);
+// console.log(Object.keys(options).length);
 
-// learnJS("JavaScript", function(){
-//     console.log("Я прохожу урок про callback-функции!");
-// });
+// console.log(options.name);
 
-/* Можно заметить, что в коде выше мы создали анонимную функцию,
-т.е. функцию без имени. 
-Это значит, что после выполнения она исчезнет и мы к ней никак не сможем обратиться далее по коду. */
+// delete options.name;
 
-/* Также можно передавать уже созданные функции: */
+// console.log(options);
 
-function done() {
-    console.log("Я прохожу урок про callback-функции!");
-}
+// let counter = 0;
 
-learnJS("JavaScript", done);
+// for (let key in options) {
+//     if (typeof(options[key]) === 'object') {
+//         for (let i in options[key]) {
+//             console.log(`Свойство ${i} имеет значение ${options[key][i]}`);
+//         }
+//     } else {
+//         console.log(`Свойство ${key} имеет значение ${options[key]}`);
+//         counter++;
+//     }
+// }
 
-/* Важно прописать название функции без круглых скобок, потому что мы не вызываем ее в настоящий момент, 
-а просто передаем ее, чтобы она была использована в дальнейшем! */
+// console.log(counter);
+
+let menu = {
+    title: "Menu",
+    width: 100,
+    height: 200
+  };
+  
+//   let {title, width, height} = menu;
+let {height, width : w, title} = menu;
+
+  console.log(w);
+
