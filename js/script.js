@@ -1,116 +1,42 @@
 "use strict";
 
-/* Destructuring */
+/* Object prototypes */
 
-/* Деструктурирующее присваивание - это специальный синтаксис, который позволяет нам
-"распаковать" массивы или объекты в кучу переменных (т.к. иногда они более удобны для использования). */
+// const str = "something";
+// const strObj = new String(str);
 
-{ /* Деструктуризация объекта */
+// console.log(typeof(str));
+// console.log(typeof(strObj));
 
-    /* У нас есть объект options: */
+// console.dir([1, 3, 5, 7]);
 
-    let options = {
-        title: 'test',
-        width: 1024,
-        height: 1440,
-        colors: {
-            main: "blue",
-            bg: "black"
-        }
-    };
+const soldier = {
+    health: 200,
+    mana: 200,
+    attack: 5,
+    armor: 7,
+    weapon: true,
+    sayHello: function() {
+        console.log('Hello!');
+    }
+};
 
-    /* Чтобы достучаться до свойства main или bg, нам нужно прописать такую контрукцию: */
-
-    // console.log(options['colors']['main']);
-
-    /* А если представить, что в свойство main  будет вложен еще объект, а в него еще объект,
-    в котором объект, в котором объект.... И так далее.
-    Тогда нам придется прописывать очень длинную и очень несимпатичную конструкцию.
-    Но мы можем воспользоваться деструктуризацией и "разобрать" объект в кучку переменных,
-    и при надобности обращаться уже к переменной: */
-
-    // let {main, bg} = options.colors;
-
-    /* То есть наши свойства options.colors.main и options.colors.bg 
-    присвоились соответствующим переменным main и bg.
-    И теперь, обращаясь к переменной main, мы получаем то же значение,
-    как если бы прописали  options['colors']['main']: */
-
-    // console.log(main);
-
-    /* При этом порядок слов не имеет значение. Вот такая запись даст такой же результат как описано выше: */
-
-    // let {bg, main} = options.colors;
-    // console.log(main);
+const johnKonstantin = {
+    health: 300
+};
 
 
-    /* Если мы хотим присвоить свойство объекта переменной с другим названием, мы можем использовать двоеточие: */
+// johnKonstantin.__proto__ = soldier;
+// console.log(johnKonstantin.armor);
+// johnKonstantin.sayHello();
 
-    // let {main: m, bg} = options.colors;
+// Object.setPrototypeOf(johnKonstantin, soldier);
+// console.log(johnKonstantin.armor);
+// johnKonstantin.sayHello();
 
-    // console.log(m);
+const vasya = Object.create(soldier);
 
-    /* Для потенциально отсутствующих свойств мы можем установить значение по умолчанию,
-    используя "=".
-    Также мы можем совмещать : и = */
+console.log(vasya);
+console.log(vasya.attack);
 
-    // let {main: m, bg: b, text: t = 56} = options.colors;
 
-    // console.log(options.colors);
-    // console.log(t);
-
-    /* Переменная t (text) будет создана, но не будет записана в исходный массив. */
-
-    /* Если у нас есть большой объект, где очень много свойств,
-    мы можем взять только те, которые нам нужны,
-    необязательно деструктурировать все свойства объекта: */
-
-    let {main} = options.colors;
-
-    console.log(main);
-
-}
-
-{ /* Деструктуризация массива */
-
-    /* Точно также мы можем деструктуризировать свойства массива: */
-
-    let user = ['Elena', 'Dutova', 25];
-
-    // let [firstName, surname, age] = user;
-    // console.log(age);
-
-    /* Деструктурирующее присваивание не уничтожает массив, 
-    все что он делает - копирует нужные значения массива в переменные.
-    То есть запись: */
-
-    // let [firstName, surname, age] = user;
-
-    /* Это сокращенный вариант: */
-
-    // let firstName = user[0];
-    // let surname = user[1];
-    // let age = user[2];
-
-    /* Мы можем пропускать ненужные для деструктуризации элементы при помощи запятой: */
-
-    // let [firstName, , age] = user;
-
-    /* Мы можем использовать любой перебираемый объект,
-    не только массив: */
-
-    let [a, b, c] = "def";
-    console.log(b);
-
-    let [one, two,three] =new Set([1, 2, 3]);
-    console.log(two);
-
-    /* И еще мы можем использовать что угодно "присваивающее" с левой стороны.
-    Например, можно присвоить свойству объекта: */
-
-    let myObj = {};
-
-    [myObj.name, myObj.surname, myObj.age] = user;
-
-    console.log(myObj.name);
-}
