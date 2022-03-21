@@ -16,18 +16,16 @@
 при помощи метода forEach вывести в консоль сообщения в таком виде:
 "Любимый жанр #(номер по порядку, начиная с 1) - это (название из массива)"*/
 
-let numberOfFilms;
-
 const personalMovieDB = {
-    count: numberOfFilms,
+    count: 0,
     movies: {},
     actors: {},
     genres: [],
     privat: false,
     start: function() {
-        numberOfFilms = +prompt("Сколько фильмов Вы уже посмотрели?", "");
-        while (numberOfFilms == '' || numberOfFilms == null || isNaN(numberOfFilms)) {
-            numberOfFilms = +prompt("Сколько фильмов Вы уже посмотрели?", "");
+        personalMovieDB.count = +prompt("Сколько фильмов Вы уже посмотрели?", "");
+        while (personalMovieDB.count == '' || personalMovieDB.count == null || isNaN(personalMovieDB.count)) {
+            personalMovieDB.count = +prompt("Сколько фильмов Вы уже посмотрели?", "");
         }
     },
     rememberMyFilms: function() {
@@ -56,28 +54,41 @@ const personalMovieDB = {
         }
     },
     writeYourGenres: function() {
-        for (let i = 0; i < 3; i++) {
-            personalMovieDB.genres[i] = prompt(`Ваш любимый жанр под номером ${i+1}`, "");
-            if (personalMovieDB.genres[i] == '' || personalMovieDB.genres[i] == null) {
+        // for (let i = 0; i < 3; i++) {
+        //     personalMovieDB.genres[i] = prompt(`Ваш любимый жанр под номером ${i+1}`, "");
+        //     if (personalMovieDB.genres[i] == '' || personalMovieDB.genres[i] == null) {
+        //         i--;
+        //     }
+        // }
+        // personalMovieDB.genres.forEach( function(item, index, array) {
+        //     console.log(`Любимый жанр №${index + 1} - это ${item}!`);
+        // });
+
+        /* или: */
+
+        for (let i = 0; i < 1; i++) {
+            let genres = prompt(`Введите 3 ваших любимых жанра через запятую:`, "").toLocaleLowerCase();
+            if (genres == '' || genres == null) {
                 i--;
             }
-            if (personalMovieDB.genres.length == 3) {
-                personalMovieDB.genres.forEach( function(i) {
-                    console.log(`Любимый жанр №${i+1} - это ${personalMovieDB.genres[i]}!`);
-                });
-            }
+            personalMovieDB.genres = genres.split(', ');
+            personalMovieDB.genres.sort();
         }
+        personalMovieDB.genres.forEach( function(item, index) {
+            console.log(`Любимый жанр №${index + 1} - это ${item}!`);
+        });
+
     },
-    showMyDB: function() {
-        if (!personalMovieDB.privat) {
+    showMyDB: function(hidden) {
+        if (!hidden) {
             console.log(personalMovieDB);
         }
     },
     toggleVisibleMyDB: function() {
-        if (personalMovieDB.privat == false) {
-            personalMovieDB.privat = true;
-        } else {
+        if (personalMovieDB.privat) {
             personalMovieDB.privat = false;
+        } else {
+            personalMovieDB.privat = true;
         }
     }
 };
