@@ -1,77 +1,89 @@
 "use strict";
 
-/* Lesson 27. Practice. Tasks */
+/* Lesson 28. Practice. Get elements from the page */
 
-/* Отработка задач из урока */
+/* DOM - Document Object Model - объектная модель документа.
+В соответствии с этой моделью каждый тег HTML страницы является объектом.
+Вложенные теги являются "детьми" родительского элемента.
+Текст, который лежит внутри тега, тоже является объектом.
 
-// let x = 5; 
-// alert( x++ );
+Все эти объекты доступны при помощи JavaScript, 
+мы можем использовать их для изменения страницы. */
 
-// [ ] + false - null + true 
-console.log([ ] + false);
-console.log(typeof([ ] + false));
-console.log([ ] + false - null);
-console.log(typeof([ ] + false - null));
-console.log([ ] + false - null + true);
-console.log(typeof([ ] + false - null + true ));
-console.log([ ] - null);
-console.log(typeof([ ] - null));
-console.log([ ] + false + null + true );
-console.log([ ] - false - null - true );
-console.log([ ] - false - null + true);
+/* Каждая веб-страница, которая загружается в браузер, имеет свой собственный объект document.
+Обратите внимание, что document существует только в браузере!
+Чтобы обратиться к DOM-у нам необходимо использовать document.
+Как у любого объекта у document есть свои методы. */
 
-// let y = 1; 
-// let x = y = 2; 
-// console.log(x);
+{ /* Относительно старые методы получения элемента со страницы */
 
-console.log([ ] + 1 + 2);
+    // 1) получение элемента по ID:
 
-console.log("1"[0]);
-
-console.log(2 && 1 && null && 0 && undefined);
-console.log(typeof(2 && 1 && null && 0 && undefined));
-
-// !!( a && b ) и (a && b)
-
-// let a = 1, b = 2;
-
-// console.log((a && b));
-// console.log(!!( a && b ));
+    const box = document.getElementById("box"); 
+    // - стоит обратить внимание, что название ID мы прописываем в виде строки (в кавычках), но без решетки!
+    // - ID должен быть 1 на странице!!!
+    console.log(box);
 
 
-console.log(null || 2 && 3 || 4 );
-// alert( null || 2 && 3 || 4 );
+    // 2) получение элемента по названию тега:
 
-const a = [1, 2, 3]; 
-const b = [1, 2, 3];
-console.log(a === b);
+    const btns = document.getElementsByTagName('button');
+    // - стоит обратить внимание, что название тега мы прописываем в виде строки (в кавычках)
+    /* тегов с одинаковым названием на странице может быть очень много,
+    поэтому при использовании этого метода важно помнить, 
+    что мы получаем ВСЕ теги с таким названием в виде некоей коллекции - псевдомассива.
+    (Даже если элемент всего 1 на странице, мы получим псевдомассив.) */
 
-console.log(+"Infinity");
-console.log(typeof(+"Infinity"));
-console.log(+"infinity");
-console.log(typeof(+"infinity"));
-
-
-let str1 = "Ёжик";
-let str2 = "яблоко";
-let str3 = "АКва";
-
-console.log(str1.codePointAt());
-console.log(str2.codePointAt());
-console.log(str3.codePointAt());
-
-let arr = ["Ёжик", "яблоко", "АКва"];
-
-console.log(arr.sort());
+    /* ПСЕВДОМАССИВ - это объект, который похож на массив. 
+    У него есть числовые свойства, как у массивов. А также свойство length.
+    Хоть псевдомассивы и похожи на массивы, все же это обычные объекты. 
+    У них нет свойств и методов массивов, таких как forEach, join, slice и др. */
+    console.log(btns);
+    /* Чтобы получить конкретный элемент, мы можем обратиться к нему через псевдомассив, указав индекс элемента: */
+    console.log(btns[3]);
+    // Либо мы можем указать индекс элемента изначально при его получении:
+    // const btns = document.getElementsByTagName('button')[3];
 
 
-if ("Ёжик" > "яблоко") {
-    console.log("YES");
-} else {
-    console.log("NO!");
+    // 3) получение элемента по названию класса:
+
+    const circles = document.getElementsByClassName("circle");
+    // Работает также как getElementsByTagName(), только с классами элементов
+    console.log(circles);
+    console.log(circles[2]);
+
+    // 4) получение элемента по имени:
+
+    // ПРАКТИЧЕСКИ НЕ ИСПОЛЬЗУЕТСЯ!
+
+    const formNames = document.getElementsByName('formInput');
+
+    console.log(formNames);
+
+}
+
+{ /* Современные методы получения элемента со страницы */
+
+    // 1) получение элемента по селектору:
+
+    /* Метод возвращает статический NodeList, содержащий все найденные элементы документа,
+    которые соответствуют указанному селектору. */
+
+    const hearts = document.querySelectorAll('.heart');
+    /* - стоит обратить внимание, что название селектора мы прописываем в виде строки, 
+    а также ставим перед названием опознавательный символ селектора - . или # или еще что. */
+    // - метод возвращает псевдомассив
+    /* - главным отличием от предыдущих методов является наличие у псевдомассива метода forEach() */
+    hearts.forEach(item => {
+        console.log(item);
+    });
+
+    // 2) получение первого элемента по селектору:
+
+    const input = document.querySelector('input');
+    console.log(input);
+
 }
 
 
-
-console.log(0 || "" || 2 || undefined || true || false);
 
