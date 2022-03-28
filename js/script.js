@@ -1,89 +1,52 @@
 "use strict";
 
-/* Lesson 28. Practice. Get elements from the page */
+/* Lesson 29. Practice. Actions with elements on the page */
 
-/* DOM - Document Object Model - объектная модель документа.
-В соответствии с этой моделью каждый тег HTML страницы является объектом.
-Вложенные теги являются "детьми" родительского элемента.
-Текст, который лежит внутри тега, тоже является объектом.
-
-Все эти объекты доступны при помощи JavaScript, 
-мы можем использовать их для изменения страницы. */
-
-/* Каждая веб-страница, которая загружается в браузер, имеет свой собственный объект document.
-Обратите внимание, что document существует только в браузере!
-Чтобы обратиться к DOM-у нам необходимо использовать document.
-Как у любого объекта у document есть свои методы. */
-
-{ /* Относительно старые методы получения элемента со страницы */
-
-    // 1) получение элемента по ID:
-
-    const box = document.getElementById("box"); 
-    // - стоит обратить внимание, что название ID мы прописываем в виде строки (в кавычках), но без решетки!
-    // - ID должен быть 1 на странице!!!
-    console.log(box);
+const box = document.getElementById("box"),
+      btns = document.getElementsByTagName('button'),
+      circles = document.getElementsByClassName("circle"),
+      hearts = document.querySelectorAll('.heart'),
+      oneHeart = document.querySelector('.heart'),
+      wrapper = document.querySelector('.wrapper');
 
 
-    // 2) получение элемента по названию тега:
+// box.style.backgroundColor = 'blue';
+// box.style.width = '500px';
 
-    const btns = document.getElementsByTagName('button');
-    // - стоит обратить внимание, что название тега мы прописываем в виде строки (в кавычках)
-    /* тегов с одинаковым названием на странице может быть очень много,
-    поэтому при использовании этого метода важно помнить, 
-    что мы получаем ВСЕ теги с таким названием в виде некоей коллекции - псевдомассива.
-    (Даже если элемент всего 1 на странице, мы получим псевдомассив.) */
+box.style.cssText = "background-color: MediumSeaGreen; width: 555px";
 
-    /* ПСЕВДОМАССИВ - это объект, который похож на массив. 
-    У него есть числовые свойства, как у массивов. А также свойство length.
-    Хоть псевдомассивы и похожи на массивы, все же это обычные объекты. 
-    У них нет свойств и методов массивов, таких как forEach, join, slice и др. */
-    console.log(btns);
-    /* Чтобы получить конкретный элемент, мы можем обратиться к нему через псевдомассив, указав индекс элемента: */
-    console.log(btns[3]);
-    // Либо мы можем указать индекс элемента изначально при его получении:
-    // const btns = document.getElementsByTagName('button')[3];
+btns[1].style.borderRadius = "100%";
+btns[1].style.backgroundColor = "pink";
+btns[1].style.color = "#000";
 
-
-    // 3) получение элемента по названию класса:
-
-    const circles = document.getElementsByClassName("circle");
-    // Работает также как getElementsByTagName(), только с классами элементов
-    console.log(circles);
-    console.log(circles[2]);
-
-    // 4) получение элемента по имени:
-
-    // ПРАКТИЧЕСКИ НЕ ИСПОЛЬЗУЕТСЯ!
-
-    const formNames = document.getElementsByName('formInput');
-
-    console.log(formNames);
-
+for (let i = 0; i < circles.length; i++) {
+    circles[i].style.backgroundColor = `#FF7F50`;
 }
 
-{ /* Современные методы получения элемента со страницы */
-
-    // 1) получение элемента по селектору:
-
-    /* Метод возвращает статический NodeList, содержащий все найденные элементы документа,
-    которые соответствуют указанному селектору. */
-
-    const hearts = document.querySelectorAll('.heart');
-    /* - стоит обратить внимание, что название селектора мы прописываем в виде строки, 
-    а также ставим перед названием опознавательный символ селектора - . или # или еще что. */
-    // - метод возвращает псевдомассив
-    /* - главным отличием от предыдущих методов является наличие у псевдомассива метода forEach() */
-    hearts.forEach(item => {
-        console.log(item);
-    });
-
-    // 2) получение первого элемента по селектору:
-
-    const input = document.querySelector('input');
-    console.log(input);
-
-}
+hearts.forEach(item => {
+    item.style.background = 'MediumSlateBlue';
+});
 
 
+const div = document.createElement('div');
+console.log(div);
+// Div существует только внтури js-файла, на странице он не появится!
 
+const text = document.createTextNode('Кукусики');
+// Создает текстовый узел. Текст существует только внтури js-файла, на странице он не появится!
+// ИСПОЛЬЗУЕТСЯ КРАЙНЕ РЕДКО
+
+div.classList.add('black');
+
+// document.body.append(div);
+
+// document.querySelector('.wrapper').append(div);
+
+// wrapper.prepend(div);
+
+// hearts[1].before(div);
+hearts[0].after(div);
+
+// circles[0].remove();
+
+hearts[2].replaceWith(circles[1]);
