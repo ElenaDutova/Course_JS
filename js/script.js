@@ -29,24 +29,60 @@ hearts.forEach(item => {
 
 
 const div = document.createElement('div');
+// Создание элемента
 console.log(div);
-// Div существует только внтури js-файла, на странице он не появится!
+// Div существует только внтури js-файла, на html странице он не появится!
 
 const text = document.createTextNode('Кукусики');
 // Создает текстовый узел. Текст существует только внтури js-файла, на странице он не появится!
 // ИСПОЛЬЗУЕТСЯ КРАЙНЕ РЕДКО
 
 div.classList.add('black');
+// Добавление css-класса к элементу
 
 // document.body.append(div);
+// Метод добавляет созданный в js-файле элемент в КОНЕЦ html структуры
 
 // document.querySelector('.wrapper').append(div);
+// Другой способ написания метода
+
+wrapper.append(div);
 
 // wrapper.prepend(div);
+// Метод добавляет созданный в js-файле элемент в НАЧАЛО html структуры
 
 // hearts[1].before(div);
-hearts[0].after(div);
+// hearts[0].after(div);
+// Методы добавляют элемент перед или после конкретного элемента
 
 // circles[0].remove();
+// Метод позволяет удалить элемент со страницы
 
-hearts[2].replaceWith(circles[1]);
+// hearts[2].replaceWith(circles[1]);
+// Метод ставит первый элемент на место второго, второй исчезает со страницы
+
+{ /* Конструкции, которые устарели, но которые можно встретить в коде */
+
+    // Предшественник append() - appendChild():
+    // wrapper.appendChild(div);
+
+    // Вместо prepend(), before(), after() был метод insertBefore() - "вставить перед":
+    // wrapper.insertBefore(div, hearts[0]);
+
+    // Вместо remove() был метод removeChild():
+    // wrapper.removeChild(hearts[1]);
+
+    // Ну и также предшественник replaceWith() - replaceChild()
+    // wrapper.replaceChild(div, hearts[1]);
+
+    // То есть раньше все команды шли через родителя
+}
+
+// div.innerHTML = 'Кукусики';
+div.innerHTML = '<h1>Кукусики</h1>';
+// Метод позволяет вставить код или текст в элемент на странице
+
+// div.textContent = 'Кукусики';
+// Метод позволяет вставить текст в элемент на странице
+
+div.insertAdjacentHTML('beforebegin', 'HELLO');
