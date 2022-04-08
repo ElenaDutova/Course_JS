@@ -1,88 +1,50 @@
-"use strict";
+/* Задания на урок:
 
-/* Lesson 29. Practice. Actions with elements on the page */
+1) Удалить все рекламные блоки со страницы (правая часть сайта)
 
-const box = document.getElementById("box"),
-      btns = document.getElementsByTagName('button'),
-      circles = document.getElementsByClassName("circle"),
-      hearts = document.querySelectorAll('.heart'),
-      oneHeart = document.querySelector('.heart'),
-      wrapper = document.querySelector('.wrapper');
+2) Изменить жанр фильма, поменять "комедия" на "драма"
 
+3) Изменить задний фон постера с фильмом на изображение "bg.jpg". Оно лежит в папке img.
+Реализовать только при помощи JS
 
-// box.style.backgroundColor = 'blue';
-// box.style.width = '500px';
+4) Список фильмов на странице сформировать на основании данных из этого JS файла.
+Отсортировать их по алфавиту 
 
-box.style.cssText = "background-color: MediumSeaGreen; width: 555px";
+5) Добавить нумерацию выведенных фильмов */
 
-btns[1].style.borderRadius = "100%";
-btns[1].style.backgroundColor = "pink";
-btns[1].style.color = "#000";
+'use strict';
 
-for (let i = 0; i < circles.length; i++) {
-    circles[i].style.backgroundColor = `#FF7F50`;
-}
+const movieDB = {
+    movies: [
+        "Люди Х",
+        "Доктор Стрендж",
+        "Интерстеллар",
+        "Одержимость",
+        "Черный лебедь"
+    ]
+};
 
-hearts.forEach(item => {
-    item.style.background = 'MediumSlateBlue';
+const advImgs = document.querySelectorAll('.promo__adv img'),
+      poster = document.querySelector('.promo__bg'),
+      genre = poster.querySelector('.promo__genre'),
+      movieList = document.querySelector('.promo__interactive-list');
+
+advImgs.forEach(item => {
+    item.remove();
 });
 
+genre.textContent = "драма";
 
-const div = document.createElement('div');
-// Создание элемента
-console.log(div);
-// Div существует только внтури js-файла, на html странице он не появится!
+poster.style.backgroundImage = "url('img/bg.jpg')";
 
-const text = document.createTextNode('Кукусики');
-// Создает текстовый узел. Текст существует только внтури js-файла, на странице он не появится!
-// ИСПОЛЬЗУЕТСЯ КРАЙНЕ РЕДКО
+movieList.innerHTML = "";
 
-div.classList.add('black');
-// Добавление css-класса к элементу
+movieDB.movies.sort();
 
-// document.body.append(div);
-// Метод добавляет созданный в js-файле элемент в КОНЕЦ html структуры
-
-// document.querySelector('.wrapper').append(div);
-// Другой способ написания метода
-
-wrapper.append(div);
-
-// wrapper.prepend(div);
-// Метод добавляет созданный в js-файле элемент в НАЧАЛО html структуры
-
-// hearts[1].before(div);
-// hearts[0].after(div);
-// Методы добавляют элемент перед или после конкретного элемента
-
-// circles[0].remove();
-// Метод позволяет удалить элемент со страницы
-
-// hearts[2].replaceWith(circles[1]);
-// Метод ставит первый элемент на место второго, второй исчезает со страницы
-
-{ /* Конструкции, которые устарели, но которые можно встретить в коде */
-
-    // Предшественник append() - appendChild():
-    // wrapper.appendChild(div);
-
-    // Вместо prepend(), before(), after() был метод insertBefore() - "вставить перед":
-    // wrapper.insertBefore(div, hearts[0]);
-
-    // Вместо remove() был метод removeChild():
-    // wrapper.removeChild(hearts[1]);
-
-    // Ну и также предшественник replaceWith() - replaceChild()
-    // wrapper.replaceChild(div, hearts[1]);
-
-    // То есть раньше все команды шли через родителя
-}
-
-// div.innerHTML = 'Кукусики';
-div.innerHTML = '<h1>Кукусики</h1>';
-// Метод позволяет вставить код или текст в элемент на странице
-
-// div.textContent = 'Кукусики';
-// Метод позволяет вставить текст в элемент на странице
-
-div.insertAdjacentHTML('beforebegin', 'HELLO');
+movieDB.movies.forEach((film, i) =>{
+    movieList.innerHTML += `
+        <li class="promo__interactive-item">${i + 1}) ${film}
+            <div class="delete"></div>
+        </li>
+    `;
+});
