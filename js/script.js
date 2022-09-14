@@ -1,65 +1,104 @@
 'use strict';
 
 
-/* Здесь мы с вами рассмотрим одну из классических задач на рекурсию, которую дают на собеседованиях.:
+/* Задания на урок:
 
-Напишите функцию, которая вычисляет факториал.
+1) Реализовать функционал, что после заполнения формы и нажатия кнопки "Подтвердить" - 
+новый фильм добавляется в список. Страница не должна перезагружаться.
+Новый фильм должен добавляться в movieDB.movies.
+Для получения доступа к значению input - обращаемся к нему как input.value;
+P.S. Здесь есть несколько вариантов решения задачи, принимается любой, но рабочий.
 
-Задание простое, но нужно понимать что такое факториал вообще. 
-Факториал  – это число, умноженное на "себя минус один", затем на "себя минус два", и так далее до 1. 
-Факториал n обозначается как n!
+2) Если название фильма больше, чем 21 символ - обрезать его и добавить три точки
 
-Отсюда мы можем понять, что функция должна принимать 1 аргумент, который будет являться числом. 
+3) При клике на мусорную корзину - элемент будет удаляться из списка (сложно)
 
-Будет неплохо, если вы на собеседовании сразу напишите проверку на приходящее значение :) 
-Поэтому, если в нашу функцию приходит дробное число или не число  
-- возвращается строка с любым сообщением на ваше усмотр.
-Если 0 и меньше - возвращается число 1.
+4) Если в форме стоит галочка "Сделать любимым" - в консоль вывести сообщение: 
+"Добавляем любимый фильм"
 
-Сам же факториал с примерами выглядит вот так:
-
-n! = n * (n - 1) * (n - 2) * ...*1 - это общая формула
-
-Примеры значений для разных n:
-
-1! = 1
-2! = 2 * 1 = 2
-3! = 3 * 2 * 1 = 6
-4! = 4 * 3 * 2 * 1 = 24
-5! = 5 * 4 * 3 * 2 * 1 = 120
-То есть, вызов нашей функции factorial(5) возвращает число 120
-
-factorial(4) => 24
-
-Решить задачу нужно через рекурсию. */
+5) Фильмы должны быть отсортированы по алфавиту */
 
 
-function getFactorial(num) {
-    if (typeof(num) !== 'number' || !Number.isInteger(num) || num < 0) {
-        return 'No!';
-    } else if (num === 1 || num === 0) {
-        return 1;
-    } else {
-        
-        return num * getFactorial(num - 1);
+document.addEventListener('DOMContentLoaded', () => {
+    const movieDB = {
+        movies: [
+            "Люди Х",
+            "Доктор Стрендж",
+            "Интерстеллар",
+            "Одержимость",
+            "Черный лебедь"
+        ]
+    };
+    
+    const advImgs = document.querySelectorAll('.promo__adv img'),
+          poster = document.querySelector('.promo__bg'),
+          genre = poster.querySelector('.promo__genre'),
+    
+          movieList = document.querySelector('.promo__interactive-list'),
+    
+          addForm = document.querySelector('form.add'),
+          addInput = addForm.querySelector('.adding__input'),
+          checkbox = addForm.querySelector('[type="checkbox"]');
+    
+
+    addForm.addEventListener('submit', (event) => {
+        event.preventDefault();
+
+        let newFilm = addInput.value;
+
+        if (newFilm) {
+            if (newFilm.length > 21) {
+                newFilm = `${newFilm.slice(0, 21)}...`;
+            }
+            if (checkbox) {
+                console.log("Добавляем любимый фильм");
+            }
+            movieDB.movies.push(newFilm);
+            createMovieList(movieDB.movies, movieList);
+        }
+
+        event.target.reset();
+    });
+
+
+    const deleteAdv = (arr) => {
+        arr.forEach(item => {
+            item.remove();
+        });
+    };
+
+    const makeChanges = () => {
+        genre.textContent = "драма";
+    
+        poster.style.backgroundImage = "url('img/bg.jpg')";
+    };
+    
+    const sortArr = (arr) => {
+        arr.sort();
+    };
+
+    function createMovieList(films, parent) {
+        parent.innerHTML = "";
+        sortArr(films);
+        films.forEach((film, i) =>{
+            parent.innerHTML += `
+                <li class="promo__interactive-item">${i + 1}) ${film}
+                    <div class="delete"></div>
+                </li>
+            `;
+        });
+
+        document.querySelectorAll('.delete').forEach((btn, i) => {
+            btn.addEventListener('click', () => {
+                btn.parentElement.remove();
+                movieDB.movies.splice(i, 1);
+                createMovieList(movieDB.movies, movieList);
+            });
+        });
     }
-}
-
-console.log(getFactorial(150));
-
-
-/* Напишите функцию sumTo(n), которая вычисляет сумму чисел 1 + 2 + ... + n. */
-
-
-function sumTo(num) {
-    if (typeof(num) !== 'number' || !Number.isInteger(num) || num <= 0 ) {
-        return 'No!';
-    } else if (num === 1) {
-        return 1;
-    } else {
-        
-        return num + sumTo(num - 1);
-    }
-}
-
-console.log(sumTo(256));
+    
+    
+    deleteAdv(advImgs);
+    makeChanges();
+    createMovieList(movieDB.movies, movieList);
+});
