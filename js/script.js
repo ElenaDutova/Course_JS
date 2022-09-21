@@ -1,24 +1,49 @@
 'use strict';
 
-window.addEventListener('DOMContentLoaded', () => {
+const btns = document.querySelectorAll('button'),
+      wrapper = document.querySelector('.btn-block');
 
-    const box = document.querySelector('.box');
+// console.log(btns[0].classList.length);
+// console.log(btns[0].classList.item(1));
+// console.log(btns[1].classList.add('red'));
+// console.log(btns[0].classList.remove('blue'));
+// console.log(btns[0].classList.toggle('blue'));
 
-    box.addEventListener('touchstart', (e) => {
-        e.preventDefault();
-        console.log('HELLO');
-        console.log(e.targetTouches);
-    });
+// console.log(btns[0].classList.contains('some'));
 
-    // box.addEventListener('touchmove', (e) => {
-    //     e.preventDefault();
-    //     console.log('Move');
-    //     console.log(e.targetTouches[0].pageX);
-    // });
+// if (btns[1].classList.contains('red')) {
+//     console.log('HELLO');
+// } else {
+//     console.log('NOTHING');
+// }
 
-    // box.addEventListener('touchend', (e) => {
-    //     e.preventDefault();
-    //     console.log('end');
-    // });
 
+// btns[0].addEventListener('click', () => {
+//     // if (!btns[1].classList.contains('red')) {
+//     //     btns[1].classList.add('red');
+//     // } else {
+//     //     btns[1].classList.remove('red');
+//     // }
+//     btns[1].classList.toggle('red');
+// });
+
+// console.log(btns[0].className);
+
+
+
+wrapper.addEventListener('click', (event) => {
+    if (event.target && event.target.tagName == 'BUTTON') {
+        btns[1].classList.toggle('red');
+    }
 });
+
+// wrapper.addEventListener('click', (event) => {
+//     if (event.target && event.target.matches('button')) {
+//         btns[1].classList.toggle('red');
+//     }
+// });
+
+const btn = document.createElement('button');
+
+wrapper.prepend(btn);
+
