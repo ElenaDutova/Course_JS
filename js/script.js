@@ -1,49 +1,104 @@
 'use strict';
 
-const btns = document.querySelectorAll('button'),
-      wrapper = document.querySelector('.btn-block');
 
-// console.log(btns[0].classList.length);
-// console.log(btns[0].classList.item(1));
-// console.log(btns[1].classList.add('red'));
-// console.log(btns[0].classList.remove('blue'));
-// console.log(btns[0].classList.toggle('blue'));
+const btn = document.querySelector('.btn');
 
-// console.log(btns[0].classList.contains('some'));
+let timerID,
+    i = 0;
 
-// if (btns[1].classList.contains('red')) {
+
+// Глобальная функция setTimeout() позволяет запустить функцию через определенный промежуток времени:
+
+// 1
+
+// const timerID = setTimeout(function() {
 //     console.log('HELLO');
-// } else {
-//     console.log('NOTHING');
+// }, 2000);
+
+
+// 2
+
+// const timerID = setTimeout(function(text) {
+//     console.log(text);
+// }, 2000, 'HELLO');
+
+
+
+// 3
+
+// const timerID = setTimeout(logger, 2000);
+
+// function logger() {
+//     console.log('text');
 // }
 
 
-// btns[0].addEventListener('click', () => {
-//     // if (!btns[1].classList.contains('red')) {
-//     //     btns[1].classList.add('red');
-//     // } else {
-//     //     btns[1].classList.remove('red');
-//     // }
-//     btns[1].classList.toggle('red');
+// 4
+// Чтобы удалить setTimeout мы можем использовать 
+
+// clearTimeout(timerID);
+// clearInterval(timerID);
+
+
+// 5
+
+// btn.addEventListener('click', () => {
+//     const timerID = setTimeout(logger, 2000);
 // });
 
-// console.log(btns[0].className);
+
+
+// function logger() {
+//     console.log('text');
+// }
+
+
+// Глобальная функция setInterval() позволяет вызывать функцию снова и снова через определенный промежуток времени:
+
+// 1
+
+// btn.addEventListener('click', () => {
+//     timerID = setInterval(logger, 1500);
+// });
 
 
 
-wrapper.addEventListener('click', (event) => {
-    if (event.target && event.target.tagName == 'BUTTON') {
-        btns[1].classList.toggle('red');
-    }
-});
-
-// wrapper.addEventListener('click', (event) => {
-//     if (event.target && event.target.matches('button')) {
-//         btns[1].classList.toggle('red');
+// function logger() {
+//     if (i === 3) {
+//         clearInterval(timerID);
 //     }
-// });
+//     console.log('text');
+//     i++;
+// }
 
-const btn = document.createElement('button');
 
-wrapper.prepend(btn);
 
+// Вызов рекурсивного setTimeout
+
+
+// let id = setTimeout(function log() {
+//     console.log("yellow");
+//     id = setTimeout(log, 500);
+// }, 500);
+
+
+// Создаем анимацию:
+
+function myAnimation() {
+    const elem = document.querySelector('.box');
+    let position = 0;
+
+    const id = setInterval(frame, 10);
+    function frame () {
+        if (position == 300) {
+            clearInterval(id);
+        } else {
+            position++;
+            elem.style.top = position + 'px';
+            elem.style.left = position + 'px';
+        }
+    }
+}
+
+
+btn.addEventListener('click', myAnimation);
