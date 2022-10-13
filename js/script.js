@@ -1,20 +1,32 @@
 'use strict';
 
-const now = new Date();
+const box = document.querySelector('.box'),
+      btn = document.querySelector('button');
 
-// console.log(now.getFullYear());
-// console.log(now.getMonth());
-// console.log(now.getDate());
-// console.log(now.getDay());
-// console.log(now.getUTCHours());
-console.log(now.getTimezoneOffset());
+// const width = box.clientWidth;
+// const height = box.clientHeight;
 
-let start = new Date();
+// const width = box.offsetWidth;
+// const height = box.offsetHeight;
 
-for (let i = 0; i < 1000000; i++) {
-    let some = i ** i;
-}
+const width = box.scrollWidth;
+const height = box.scrollHeight;
 
-let end = new Date();
+console.log(width, height);
 
-alert(`Цмкл отработал за ${end - start} миллисекунд`);
+btn.addEventListener('click', () => {
+    // box.style.height = box.scrollHeight + 'px';
+    console.log(box.scrollTop);
+});
+
+console.log(box.getBoundingClientRect());
+
+
+const style = window.getComputedStyle(box);
+
+console.log(box.offsetTop, box.offsetLeft);
+
+// console.log(style.display);
+
+// console.log(document.documentElement.clientWidth);
+// console.log(document.documentElement.scrollTop);
