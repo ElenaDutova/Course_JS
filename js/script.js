@@ -1,32 +1,34 @@
 'use strict';
 
-const box = document.querySelector('.box'),
-      btn = document.querySelector('button');
+// Функции-конструкторы.
 
-// const width = box.clientWidth;
-// const height = box.clientHeight;
+// Для создания множества похожих и однотипных
+// объектов мы можем использовать функцию конструктор и оператор new.
+// Имя функции-контруктора пишется с большой буквы.
 
-// const width = box.offsetWidth;
-// const height = box.offsetHeight;
+function User(name, age) {
+    this.name = name;
+    this.age = age;
+    this.isHuman = true;
+    this.hello = function() {
+        console.log(`Hello ${this.name}!`);
+    };
+}
 
-const width = box.scrollWidth;
-const height = box.scrollHeight;
+// Функция-контруктор должна вызываться через оператор new:
 
-console.log(width, height);
+const lena = new User('Lena', 25),
+      roma = new User('Roman', 30);
 
-btn.addEventListener('click', () => {
-    // box.style.height = box.scrollHeight + 'px';
-    console.log(box.scrollTop);
-});
+console.log(lena);
+console.log(roma);
 
-console.log(box.getBoundingClientRect());
+lena.hello();
 
+// Также мы можем использовать prototype:
 
-const style = window.getComputedStyle(box);
+User.prototype.exit = function() {
+    console.log(`Пользователь ${this.name} вышел из дома!`);
+};
 
-console.log(box.offsetTop, box.offsetLeft);
-
-// console.log(style.display);
-
-// console.log(document.documentElement.clientWidth);
-// console.log(document.documentElement.scrollTop);
+roma.exit();
