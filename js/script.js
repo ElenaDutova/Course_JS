@@ -1,23 +1,33 @@
 'use strict';
 
-// JSON - javascript object notation
-// Современный текстовый формат передачи данных в формате "Ключ: значение"
+const inputRub = document.querySelector('#rub'),
+      inputUsd = document.querySelector('#usd');
 
-const persone = {
-    name: 'Alex',
-    tel: '+79993335555',
-    parents: {
-        mom: 'Olga',
-        dad: 'Ivan',
-        sister: 'Kate'
-    }
-};
+inputRub.addEventListener('input', () => {
+    const request = new XMLHttpRequest();
 
-// console.log(JSON.parse(JSON.stringify(persone)));
+    request.open('GET', 'js/current.json');
+    request.setRequestHeader('Content-type', 'application/json; charset=utf-8');
+    request.send();
 
-// Создаем глубокую копию объекта при помощи JSON:
+    // request.addEventListener('readystatechange', () => {
+    //     if (request.readyState === 4 && request.status === 200) {
+    //         // console.log(request.response);
+    //         const data = JSON.parse(request.response);
+    //         // console.log(data);
+    //         inputUsd.value = (+inputRub.value / data.current.usd).toFixed(2);
+    //     } else {
+    //         inputUsd.value = 'Ошибка';
+    //     }
+    // });
 
-const clonePersone = JSON.parse(JSON.stringify(persone));
-clonePersone.parents.mom = 'Ann';
-console.log(clonePersone);
-console.log(persone);
+    request.addEventListener('load', () => {
+        if (request.status === 200) {
+            const data = JSON.parse(request.response);
+            inputUsd.value = (+inputRub.value / data.current.usd).toFixed(2);
+        } else {
+            inputUsd.value = 'Ошибка';
+        }
+    });
+
+});
